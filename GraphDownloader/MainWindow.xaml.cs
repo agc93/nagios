@@ -14,6 +14,15 @@ namespace GraphDownloader
     public partial class MainWindow
     {
         public static string[] hostArray = null;
+        private string _folderPath;
+
+        public string folderPath {
+            get { return _folderPath; }
+            set { _folderPath = value;
+            lblFolder.Content = _folderPath;
+            }
+        }
+        
 
         public MainWindow() {
             Hosts host = new Hosts();
@@ -44,7 +53,7 @@ namespace GraphDownloader
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e) {
-            Common.ChooseFolder();
+            folderPath = Common.ChooseFolder();
         }
 
         private void btnDownload_Click(object sender, RoutedEventArgs e) {
