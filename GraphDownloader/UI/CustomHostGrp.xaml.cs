@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +13,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using GraphDownloader.Shared;
+using MahApps.Metro.Controls;
 
 namespace GraphDownloader.UI
 {
     /// <summary>
     /// Interaction logic for CustomHostGrp.xaml
     /// </summary>
-    public partial class CustomHostGrp
+    public partial class CustomHostGrp : MetroWindow
     {
         public static string[] customHosts = null;
+        public DataTable hostTable { get; set; }
         public CustomHostGrp()
         {
             InitializeComponent();
@@ -44,14 +47,20 @@ namespace GraphDownloader.UI
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (customHosts != null)
-            {
-                MainWindow.hostArray = customHosts;
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show(Properties.Resources.hostFileError);
+            if (txtGrpName.Text != null) {
+                if (customHosts != null)
+                {
+                    DataTable dTable = new DataTable(txtGrpName.Text.ToString());
+                    dTable.Rows.Add(customHosts);
+                    this.hostTable = dTable;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show(Properties.Resources.hostFileError);
+                }
+            } else {
+                //error message
             }
         }
     }

@@ -84,5 +84,10 @@ namespace GraphDownloader.Shared
         }
 
         #endregion non-static methods
+
+        internal void AddTable(DataTable dataTable) {
+            hostsSet.Tables.Add(dataTable);
+            SaveHosts(hostsSet);
+        }
     }
 }

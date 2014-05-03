@@ -77,10 +77,12 @@ namespace GraphDownloader
 
         private void startDownload(DateTime start, DateTime stop, string folder) {
             string[] array = null;
+            Hosts host = new Hosts();
             double startStamp = Common.toTimestamp(start);
             double endStamp = Common.toTimestamp(stop);
             string ip = Properties.Settings.Default.IPAddress;
             string uri = (String.Format("http://{0}/cgi-bin/nagios3/trends.cgi?createimage&t1={1}&t2={2}&assumeinitialstates=yes&assumestatesduringnotrunning=yes&initialassumedhoststate=0&initialassumedservicestate=0&assumestateretention=yes&includesoftstates=no&host={3}&backtrack=4&zoom=4", ip, startStamp, endStamp, "{0}"));
+            // well this won't work anymore
             switch (cmbHostGrp.SelectedIndex) {
                 case 0:
                     //yellow cabs
@@ -93,8 +95,8 @@ namespace GraphDownloader
                 case 3:
                     CustomHostGrp custom = new CustomHostGrp();
                     custom.ShowDialog();
-                    array = hostArray;
-                    hostArray = null;
+                    host.AddTable(custom.hostTable);
+                    array = null;
                     break;
                 case 2:
                 //thats a separator, you twit.
