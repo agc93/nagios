@@ -7,7 +7,7 @@ using winForms = System.Windows.Forms;
 using win = Microsoft.WindowsAPICodePack.Dialogs;
 
 
-namespace GraphDownloader
+namespace GraphDownloader.Shared
 {
     public static class Common
     {

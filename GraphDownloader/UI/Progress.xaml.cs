@@ -3,8 +3,9 @@ using System;
 using System.Net;
 using System.Text;
 using System.Windows;
+using GraphDownloader.Shared;
 
-namespace GraphDownloader
+namespace GraphDownloader.UI
 {
     /// <summary>
     /// Interaction logic for Progress.xaml

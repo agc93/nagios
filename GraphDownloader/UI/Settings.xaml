@@ -1,4 +1,4 @@
-﻿<Controls:MetroWindow x:Class="GraphDownloader.Settings"
+﻿<Controls:MetroWindow x:Class="GraphDownloader.UI.Settings"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
