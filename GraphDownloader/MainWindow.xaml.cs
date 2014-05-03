@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data;
+using System.Deployment.Application;
 using System.Windows;
 using GraphDownloader.Shared;
 using GraphDownloader.UI;
@@ -14,14 +16,21 @@ namespace GraphDownloader
         public static string[] hostArray = null;
 
         public MainWindow() {
-            if (Common.checkDataFile()) {
+            Hosts host = new Hosts();
+            if (host.CheckDataFile()) {
                 InitializeComponent();
                 Properties.Settings.Default.FolderPath = null;
+                PopulateHostGroups(host.hostsSet);
             } else {
                 Application.Current.Shutdown();
             }
 
-            //startUp();
+        }
+
+        private void PopulateHostGroups(System.Data.DataSet dataSet) {
+            foreach (DataTable table in dataSet.Tables) {
+                cmbHostGrp.Items.Add(table.TableName);
+            }
         }
 
         private void startUp() {

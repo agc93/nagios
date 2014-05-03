@@ -91,22 +91,5 @@ namespace GraphDownloader.Shared
                 winForms.MessageBox.Show((mainText + Environment.NewLine + caption + Environment.NewLine + footerText), windowTitle);
             }
         }
-
-        internal static bool checkDataFile() {
-            try {
-                if (!System.IO.File.Exists(Properties.Resources.connString)) {
-                    //file doesn't exist, so create it
-                    File.Create(Properties.Resources.connString);
-                    return true;
-                } else {
-                    //file already exists
-                    return true;
-                }
-            }
-            catch (Exception ex) {
-                Common.taskDialogAdv(Properties.Resources.dataFileError1, Properties.Resources.appError, ex.InnerException.ToString(), Properties.Resources.settingsErrorTitle);
-                return false;
-            }
-        }
     }
 }

@@ -28,10 +28,10 @@
         <Label Content="Start Date" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top"/>
         <Label Content="End Date" HorizontalAlignment="Left" Margin="20,125,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="cmbHostGrp" HorizontalAlignment="Left" Margin="195,180,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem Content="Yellow"/>
-            <ComboBoxItem Content="BAC"/>
-            <Separator/>
+            <!-- <ComboBoxItem Content="Yellow"/>
+            <ComboBoxItem Content="BAC"/> -->
             <ComboBoxItem Content="Custom..."/>
+            <Separator/>
         </ComboBox>
         <Label Content="Host Group:" HorizontalAlignment="Left" Margin="20,180,0,0" VerticalAlignment="Top"/>
 

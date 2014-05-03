@@ -70,7 +70,7 @@ namespace GraphDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to |DataDirectory|\hosts.xml.
+        ///   Looks up a localized string similar to hosts.xml.
         /// </summary>
         internal static string connString {
             get {
