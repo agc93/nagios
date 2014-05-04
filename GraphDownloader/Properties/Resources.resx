@@ -120,6 +120,12 @@
   <data name="appError" xml:space="preserve">
     <value>An Application Error has occurred</value>
   </data>
+  <data name="connString" xml:space="preserve">
+    <value>hosts.xml</value>
+  </data>
+  <data name="dataFileError1" xml:space="preserve">
+    <value>The application encountered an error when reading the configuration file. If the error persists, try reinstalling the application.</value>
+  </data>
   <data name="dlError" xml:space="preserve">
     <value>There was an error while connecting to the server. Check your connection and settings and try again.</value>
   </data>

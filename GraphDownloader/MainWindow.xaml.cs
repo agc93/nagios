@@ -1,19 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using winForms = System.Windows.Forms;
-using win = Microsoft.WindowsAPICodePack.Dialogs;
+using GraphDownloader.Shared;
+using GraphDownloader.UI;
 using Microsoft.Win32;
 
 namespace GraphDownloader
@@ -23,116 +12,94 @@ namespace GraphDownloader
     /// </summary>
     public partial class MainWindow
     {
-        public static string[] hostArray = null;
-        public MainWindow()
-        {
-            InitializeComponent();
-            Properties.Settings.Default.FolderPath = null;
-            //startUp();
+        private string _folderPath;
+        private Hosts host;
+
+        public string folderPath {
+            get { return _folderPath; }
+            set {
+                _folderPath = value;
+                lblFolder.Content = _folderPath;
+            }
         }
 
-        private void startUp()
-        {
-            RegistryKey installed_versions = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\NET Framework Setup\NDP");
-            string[] version_names = installed_versions.GetSubKeyNames();
-            double Framework = Convert.ToDouble(version_names[version_names.Length - 1].Remove(0, 1));
-            if (Framework < 4)
-            {
-                MessageBox.Show(Properties.Resources.fwError);
+        public MainWindow() {
+            host = new Hosts();
+            if (host.CheckDataFile()) {
+                InitializeComponent();
+                Properties.Settings.Default.FolderPath = null;
+                refreshCombo();
+            } else {
                 Application.Current.Shutdown();
             }
         }
 
-        private void btnBrowse_Click(object sender, RoutedEventArgs e)
-        {
-            Common.ChooseFolder();
+        private void btnBrowse_Click(object sender, RoutedEventArgs e) {
+            folderPath = Common.ChooseFolder();
         }
 
-        private void btnDownload_Click(object sender, RoutedEventArgs e)
-        {
-            if (Properties.Settings.Default.FolderPath != null)
-            {
-                if ((checkFields(pkrStartDate.SelectedDate)) && (checkFields(pkrEndDate.SelectedDate)) && (pkrStartDate.SelectedDate < pkrEndDate.SelectedDate))
-                {
-                    if (cmbHostGrp.SelectedIndex != 2)
-                    {
-                        startDownload((DateTime)pkrStartDate.SelectedDate, (DateTime)pkrEndDate.SelectedDate, Properties.Settings.Default.FolderPath.ToString());
-                    }
-                    else
-                    {
-                        //pick another host group
-                        Common.taskDialogAdv(Properties.Resources.settingsError, Properties.Resources.settingsErrorText, Properties.Resources.settingsErrorHosts, Properties.Resources.settingsErrorTitle);
-                    }
-                }
-                else
-                {
+        private void btnDownload_Click(object sender, RoutedEventArgs e) {
+            if (Properties.Settings.Default.FolderPath != null) {
+                if ((checkFields(pkrStartDate.SelectedDate)) && (checkFields(pkrEndDate.SelectedDate)) && (pkrStartDate.SelectedDate < pkrEndDate.SelectedDate)) {
+                    startDownload((DateTime)pkrStartDate.SelectedDate, (DateTime)pkrEndDate.SelectedDate, Properties.Settings.Default.FolderPath.ToString());
+
+                    //pick another host group
+                    //Common.taskDialogAdv(Properties.Resources.settingsError, Properties.Resources.settingsErrorText, Properties.Resources.settingsErrorHosts, Properties.Resources.settingsErrorTitle);
+                } else {
                     //wrong dates
                     Common.taskDialogAdv(Properties.Resources.settingsError, Properties.Resources.settingsErrorText, Properties.Resources.settingsErrorDate, Properties.Resources.settingsErrorTitle);
                 }
-            }
-            else
-            {
+            } else {
                 //pick a folder
                 Common.taskDialogAdv(Properties.Resources.settingsError, Properties.Resources.settingsErrorText, Properties.Resources.settingsErrorFolder, Properties.Resources.settingsErrorTitle);
             }
-            
-            
         }
 
-        private void startDownload(DateTime start, DateTime stop, string folder)
-        {
-            string[] array = null;
+        private void startDownload(DateTime start, DateTime stop, string folder) {
+            Hosts host = new Hosts();
             double startStamp = Common.toTimestamp(start);
             double endStamp = Common.toTimestamp(stop);
             string ip = Properties.Settings.Default.IPAddress;
             string uri = (String.Format("http://{0}/cgi-bin/nagios3/trends.cgi?createimage&t1={1}&t2={2}&assumeinitialstates=yes&assumestatesduringnotrunning=yes&initialassumedhoststate=0&initialassumedservicestate=0&assumestateretention=yes&includesoftstates=no&host={3}&backtrack=4&zoom=4", ip, startStamp, endStamp, "{0}"));
-            switch (cmbHostGrp.SelectedIndex)
-            {
-                case 0:
-                    //yellow cabs
-                    array = Common.yellowCabs; //formerly Common.hostArray
-                    break;
-                case 1:
-                    //BAC
-                    array = Common.bneAirport;
-                    break;
-                case 3:
-                    CustomHostGrp custom = new CustomHostGrp();
-                    custom.ShowDialog();
-                    array = hostArray;
-                    hostArray = null;
-                    break;
-                case 2:
-                    //thats a separator, you twit.
-                default:
-                    //pick something, you twit.
-                    MessageBox.Show("Choose a host group before continuing.");
-                    break;
-            }
-            if (array != null)
-            {
-                Progress operation = new Progress(array, uri, Properties.Settings.Default.FolderPath);
+            // well this won't work anymore
+            if (cmbHostGrp.SelectedItem.ToString() != null && cmbHostGrp.SelectedItem.ToString() != "") {
+                Progress operation = new Progress();
+                operation.dlUri = uri;
+                operation.folderPath = folder;
+                operation.hostsTable = host.GetTableFromName(cmbHostGrp.SelectedItem.ToString());
                 operation.Show();
-            }          
+            }
         }
 
-        private bool checkFields(DateTime? date)
-        {
-
-            if (date != null)
-            {
+        private bool checkFields(DateTime? date) {
+            if (date != null) {
                 return true;
-            }
-            else
-            {
+            } else {
                 return false;
             }
         }
 
-        private void btnSettings_Click(object sender, RoutedEventArgs e)
-        {
+        private void btnSettings_Click(object sender, RoutedEventArgs e) {
             Settings settings = new Settings();
             settings.Show();
+        }
+
+        private void refreshCombo() {
+            cmbHostGrp.ItemsSource = null;
+            cmbHostGrp.Items.Clear();
+            cmbHostGrp.ItemsSource = host.ListTableNames();
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e) {
+            folderPath = string.Empty;
+            refreshCombo();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e) {
+            CustomHostGrp custom = new CustomHostGrp();
+            custom.ShowDialog();
+            host.AddTable(custom.hostTable);
+            refreshCombo();
         }
     }
 }
