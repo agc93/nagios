@@ -51,7 +51,7 @@ namespace GraphDownloader.Shared
             FileStream stream = loadFileStream();
             DataSet ds = new DataSet();
             ds = LoadFromStream(ds, stream);
-            ds.Tables.Add("test-table");
+            //ds.Tables.Add("test-table");
             this.hostsSet = ds;
         }
 

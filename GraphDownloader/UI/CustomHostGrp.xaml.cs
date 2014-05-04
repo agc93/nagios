@@ -47,11 +47,12 @@ namespace GraphDownloader.UI
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (txtGrpName.Text != null) {
+            if (txtGrpName.Text != "" && txtGrpName.Text != null) {
                 if (customHosts != null)
                 {
                     DataTable dTable = new DataTable(txtGrpName.Text.ToString());
-                    dTable.Rows.Add(customHosts);
+                    dTable.Columns.Add("hostname");
+                    dTable = ReadArrayToTable(customHosts, dTable);
                     this.hostTable = dTable;
                     this.Close();
                 }
@@ -62,6 +63,13 @@ namespace GraphDownloader.UI
             } else {
                 //error message
             }
+        }
+
+        private DataTable ReadArrayToTable(string[] selectedHosts, DataTable dTable) {
+            foreach (string item in selectedHosts) {
+                dTable.Rows.Add(item);
+            }
+            return dTable;
         }
     }
 }

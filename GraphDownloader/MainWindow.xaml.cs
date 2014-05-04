@@ -85,15 +85,17 @@ namespace GraphDownloader
             // well this won't work anymore
             switch (cmbHostGrp.SelectedIndex) {
                 case 0:
-                    //yellow cabs
-                    array = Common.yellowCabs; //formerly Common.hostArray
+                    CustomHostGrp custom = new CustomHostGrp();
+                    custom.ShowDialog();
+                    host.AddTable(custom.hostTable);
+                    array = null;
                     break;
                 case 1:
                     //BAC
                     array = Common.bneAirport;
                     break;
                 case 3:
-                    CustomHostGrp custom = new CustomHostGrp();
+                    custom = new CustomHostGrp();
                     custom.ShowDialog();
                     host.AddTable(custom.hostTable);
                     array = null;
