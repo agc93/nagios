@@ -43,7 +43,7 @@ namespace GraphDownloader.Shared
                 }
             }
             catch (Exception ex) {
-                Common.taskDialogAdv(Properties.Resources.dataFileError1, Properties.Resources.appError, ex.InnerException.ToString(), Properties.Resources.settingsErrorTitle);
+                Common.MsgAdvanced(Properties.Resources.dataFileError1, Properties.Resources.appError, ex.InnerException.ToString(), Properties.Resources.settingsErrorTitle);
                 return false;
             }
         }
@@ -63,8 +63,15 @@ namespace GraphDownloader.Shared
         }
 
         internal FileStream loadFileStream() {
-            IsolatedStorageFileStream loadStream = new IsolatedStorageFileStream(Properties.Resources.connString, FileMode.Open, storageFile);
-            return loadStream;
+            try {
+                IsolatedStorageFileStream loadStream = new IsolatedStorageFileStream(Properties.Resources.connString, FileMode.Open, storageFile);
+                return loadStream;
+            }
+            catch (Exception ex) {
+                Common.MsgSimple("The hosts data file is currently in use. Please wait a moment and try again");
+                return null;
+            }
+            
         }
 
         private bool SaveHosts(DataSet ds) {
@@ -77,7 +84,7 @@ namespace GraphDownloader.Shared
                         return true;
                     }
                     catch (Exception ex) {
-                        Common.taskDialogAdv(Properties.Resources.dataFileError1, Properties.Resources.appError, ex.InnerException.ToString(), Properties.Resources.settingsErrorTitle);
+                        Common.MsgAdvanced(Properties.Resources.dataFileError1, Properties.Resources.appError, ex.InnerException.ToString(), Properties.Resources.settingsErrorTitle);
                         return false;
                     }
                 }
@@ -100,9 +107,22 @@ namespace GraphDownloader.Shared
         }
 
         internal DataTable GetTableFromName(string p) {
-            DataTable dTable = hostsSet.Tables[p];
+            try {
+                DataTable dTable = hostsSet.Tables[p];
+                return dTable;
+            }
+            catch (Exception) {
+
+                throw new InvalidDataException("Table does not exist");
+            }
             //need error handling here.
-            return dTable;
+        }
+
+        internal void DeleteTableName(string p) {
+            DataTable dTable = hostsSet.Tables[p];
+            //need error handling
+            hostsSet.Tables.Remove(dTable);
+            SaveHosts(hostsSet);
         }
     }
 }

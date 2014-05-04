@@ -39,7 +39,7 @@
             </StackPanel>
             <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5,5,5,5" />
             <StackPanel Orientation="Vertical">
-                <Button x:Name="btnManage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}">
+                <Button x:Name="btnManage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}" Click="btnManage_Click">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.Fill>
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cogs}" />
@@ -65,10 +65,10 @@
                         <Setter Property="Margin" Value="5,10,5,5" />
                     </Style>
                 </StackPanel.Resources>
-                <Label Content="Host Group:" VerticalAlignment="Top" />
                 <Label Content="Destination Folder:" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 <Label Content="Start Date" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 <Label Content="End Date" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Label Content="Host Group:" VerticalAlignment="Top" />
             </StackPanel>
             <StackPanel x:Name="pnlPickers" Orientation="Vertical" Margin="10,10,10,10">
                 <Button x:Name="btnBrowse" Margin="5,10,5,5" Content="Browse..." Click="btnBrowse_Click" Visibility="Visible" HorizontalAlignment="Right" />
