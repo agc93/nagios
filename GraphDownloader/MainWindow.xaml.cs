@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Deployment.Application;
 using System.Windows;
@@ -15,6 +16,7 @@ namespace GraphDownloader
     {
         public static string[] hostArray = null;
         private string _folderPath;
+        private Hosts host;
 
         public string folderPath {
             get { return _folderPath; }
@@ -25,7 +27,7 @@ namespace GraphDownloader
         
 
         public MainWindow() {
-            Hosts host = new Hosts();
+            host = new Hosts();
             if (host.CheckDataFile()) {
                 InitializeComponent();
                 Properties.Settings.Default.FolderPath = null;
@@ -124,6 +126,16 @@ namespace GraphDownloader
         private void btnSettings_Click(object sender, RoutedEventArgs e) {
             Settings settings = new Settings();
             settings.Show();
+        }
+
+        private void refreshCombo() {
+            cmbHostGrp.ItemsSource = null;
+            cmbHostGrp.Items.Clear();
+            cmbHostGrp.ItemsSource = host.GetTableNames();
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e) {
+            refreshCombo();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.IO.IsolatedStorage;
@@ -88,6 +89,14 @@ namespace GraphDownloader.Shared
         internal void AddTable(DataTable dataTable) {
             hostsSet.Tables.Add(dataTable);
             SaveHosts(hostsSet);
+        }
+
+        internal List<string> GetTableNames() {
+            List<string> names = new List<string>();
+            foreach (DataTable table in hostsSet.Tables) {
+                names.Add(table.TableName);
+            }
+            return names;
         }
     }
 }

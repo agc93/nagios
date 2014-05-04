@@ -11,60 +11,74 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="10,10,10,10" x:Name="pnlButtonBar" Grid.Row="0">
-                <StackPanel Orientation="Vertical">
-                    <Button x:Name="btnAdd" HorizontalAlignment="Center" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}">
-                        <Rectangle Width="20" Height="20">
-                            <Rectangle.Fill>
-                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Button>
-                    <TextBlock x:Name="lblAdd" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Add Hosts" Width="45" TextWrapping="WrapWithOverflow" TextAlignment="Center"/>
-                </StackPanel>
-                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5,5,5,5" />
-                <StackPanel Orientation="Vertical">
-                    <Button x:Name="btnRefresh" HorizontalAlignment="Center" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}">
-                        <Rectangle Width="20" Height="20">
-                            <Rectangle.Fill>
-                                <VisualBrush Stretch="UniformToFill" Visual="{StaticResource appbar_refresh}"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Button>
-                    <Label x:Name="lblRefresh" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-                </StackPanel>
-                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5,5,5,5" />
-                <StackPanel Orientation="Vertical">
-                    <Button x:Name="btnManage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}">
-                        <Rectangle Width="20" Height="20">
-                            <Rectangle.Fill>
-                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cogs}"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Button>
-                    <TextBlock x:Name="lblManage" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Manage Hosts" Width="45" TextWrapping="WrapWithOverflow" TextAlignment="Center"/>
-                </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5" x:Name="pnlButtonBar" Grid.Row="0">
+            <StackPanel Orientation="Vertical">
+                <Button x:Name="btnAdd" HorizontalAlignment="Center" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+                <TextBlock x:Name="lblAdd" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Add Hosts" Width="45" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
             </StackPanel>
-            <Separator />
-            <StackPanel x:Name="pnlPickers" Margin="10,10,10,10" Grid.Row="1">
-                <Button x:Name="btnBrowse" Content="Browse..." Margin="240,100,27,325" Click="btnBrowse_Click"/>
-                <DatePicker x:Name="pkrStartDate" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" />
-                <DatePicker x:Name="pkrEndDate" HorizontalAlignment="Left" Margin="227,205,0,0" VerticalAlignment="Top"/>
-                <Label Content="Destination Folder:" HorizontalAlignment="Left" Margin="20,100,0,0" VerticalAlignment="Top"/>
-                <Label Content="Start Date" HorizontalAlignment="Left" Margin="20,150,0,0" VerticalAlignment="Top"/>
-                <Label Content="End Date" HorizontalAlignment="Left" Margin="20,205,0,0" VerticalAlignment="Top"/>
-                <ComboBox x:Name="cmbHostGrp" HorizontalAlignment="Left" Margin="195,260,0,0" VerticalAlignment="Top" Width="120" >
-                    <ComboBoxItem Content="Custom..."/>
-                    <Separator/>
-                </ComboBox>
-                <Label Content="Host Group:" HorizontalAlignment="Left" Margin="20,260,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="btnDownload" Content="Download" HorizontalAlignment="Left" Margin="213,316,0,0" VerticalAlignment="Top" Width="102" Click="btnDownload_Click" Height="34" FontSize="14"/>
-                <Label x:Name="lblFolder" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,300,0,0" Width="180" />
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5,5,5,5" />
+            <StackPanel Orientation="Vertical">
+                <Button x:Name="btnRefresh" HorizontalAlignment="Center" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}" Click="btnRefresh_Click">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="UniformToFill" Visual="{StaticResource appbar_refresh}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+                <Label x:Name="lblRefresh" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Top" />
+            </StackPanel>
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5,5,5,5" />
+            <StackPanel Orientation="Vertical">
+                <Button x:Name="btnManage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cogs}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+                <TextBlock x:Name="lblManage" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Manage Hosts" Width="45" TextWrapping="WrapWithOverflow" TextAlignment="Center" />
             </StackPanel>
         </StackPanel>
-
+        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="1">
+            <Separator />
+            <Label Content="Enter the information below to download..." VerticalAlignment="Center" FontSize="14" FontWeight="Bold" />
+            <Separator />
+        </StackPanel>
+        <DockPanel LastChildFill="True" Grid.Row="2">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="40" HorizontalAlignment="Right">
+                <Label x:Name="lblFolder" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" Width="220" />
+                <Button x:Name="btnDownload" Content="Download" HorizontalAlignment="Right" Margin="5,5,5,5" VerticalAlignment="Center" Width="100" Click="btnDownload_Click" Height="30" FontSize="14" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="10,10,10,10" x:Name="pnlLeft" DockPanel.Dock="Left" Width="150">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Margin" Value="5,10,5,5" />
+                    </Style>
+                </StackPanel.Resources>
+                <Label Content="Host Group:" VerticalAlignment="Top" />
+                <Label Content="Destination Folder:" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Label Content="Start Date" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Label Content="End Date" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </StackPanel>
+            <StackPanel x:Name="pnlPickers" Orientation="Vertical" Margin="10,10,10,10">
+                <Button x:Name="btnBrowse" Margin="5,10,5,5" Content="Browse..." Click="btnBrowse_Click" Visibility="Visible" HorizontalAlignment="Right" />
+                <DatePicker x:Name="pkrStartDate" Margin="5,10,5,5" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                <DatePicker x:Name="pkrEndDate" Margin="5,10,5,5" VerticalAlignment="Top" HorizontalAlignment="Right" />
+                <ComboBox x:Name="cmbHostGrp" Margin="5,10,5,5" VerticalAlignment="Top" Width="120" HorizontalAlignment="Right">
+                    <!-- <ComboBoxItem Content="Custom..." />
+                    <Separator /> -->
+                </ComboBox>
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Controls:MetroWindow>
