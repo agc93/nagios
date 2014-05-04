@@ -4,6 +4,7 @@ using GraphDownloader.UI;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using win = Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.Win32;
 using winForms = System.Windows.Forms;
 
 namespace GraphDownloader.Shared
@@ -55,40 +56,8 @@ namespace GraphDownloader.Shared
             return;
         }
 
-        [Obsolete("use Common.MsgSimple or Common.MsgDialog instead.", true)]
-        public static void taskDialogSimple(string mainText, string caption, string footerText) {
-            if (win.TaskDialog.IsPlatformSupported == true) {
-                win.TaskDialog td = new win.TaskDialog();
-                td.InstructionText = mainText;
-                td.Text = caption;
-                td.FooterText = footerText;
-                td.Show();
-            } else {
-                winForms.MessageBox.Show(mainText + Environment.NewLine + caption + Environment.NewLine + footerText);
-            }
-        }
-
-        [Obsolete("use Common.MsgAdvanced instead", true)]
-        public static void taskDialogAdv(string mainText, string caption, string footerText, string windowTitle) {
-            if (win.TaskDialog.IsPlatformSupported == true) {
-                win.TaskDialog td = new win.TaskDialog();
-                td.Cancelable = false;
-                td.StandardButtons = win.TaskDialogStandardButtons.Ok;
-                td.DetailsExpanded = false;
-                td.ExpansionMode = win.TaskDialogExpandedDetailsLocation.ExpandFooter;
-                td.Icon = win.TaskDialogStandardIcon.Warning;
-                td.InstructionText = mainText;
-                td.Text = caption;
-                td.DetailsCollapsedLabel = "More details";
-                td.DetailsExpandedLabel = "Less details";
-                td.DetailsExpandedText = footerText;
-                td.Show();
-            } else {
-                winForms.MessageBox.Show((mainText + Environment.NewLine + caption + Environment.NewLine + footerText), windowTitle);
-            }
-        }
-
-        internal static string ChooseFolder() {
+        [Obsolete("Use Common.ChooseFolder() instead")]
+        internal static string ChooseFolderTd() {
             if (win.CommonFileDialog.IsPlatformSupported == true) {
                 var dialog = new win.CommonOpenFileDialog();
                 dialog.IsFolderPicker = true;
@@ -109,7 +78,12 @@ namespace GraphDownloader.Shared
             }
         }
 
-        internal static string[] ChooseFile() {
+        internal static string ChooseFolder() {
+            return null;
+        }
+
+        [Obsolete("use Common.ChooseFile() instead")]
+        internal static string[] ChooseFileTd() {
             if (win.CommonFileDialog.IsPlatformSupported == true) {
                 var dialog = new win.CommonOpenFileDialog();
                 dialog.IsFolderPicker = false;
@@ -128,6 +102,18 @@ namespace GraphDownloader.Shared
                 }
             }
             return null;
+        }
+
+        internal static string[] ChooseFile() {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Text documents (.txt)|*.txt";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true) {
+                string[] hosts = ReadHostFile(dlg.FileName);
+                return hosts;
+            }
+            return null;
+            
         }
 
         internal static string[] ReadHostFile(string filePath) {

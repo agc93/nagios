@@ -1,0 +1,40 @@
+﻿<Controls:MetroWindow x:Class="GraphDownloader.UI.ManageHosts"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="ManageHosts" Height="400" Width="300" ResizeMode="NoResize">
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <StackPanel x:Name="pnlFooter" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="5" Height="50" DockPanel.Dock="Bottom">
+                <Button x:Name="btnOk" Width="75" Height="30" Content="Save" FontWeight="Bold" Click="btnOk_Click" />
+            </StackPanel>
+            <StackPanel x:Name="pnlButton" VerticalAlignment="Center" HorizontalAlignment="Right" Orientation="Vertical" Margin="5" Width="50" DockPanel.Dock="Right">
+                <Button x:Name="btnInfo" HorizontalAlignment="Right" VerticalAlignment="Center" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="Group Info" Click="btnInfo_Click">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_information_circle}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+                <Button x:Name="btnAdd" HorizontalAlignment="Right" VerticalAlignment="Center" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="Add New Group" Click="btnAdd_Click">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+                <Button x:Name="btnDelete" HorizontalAlignment="Right" VerticalAlignment="Center" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}" ToolTip="Delete Group" Click="btnDelete_Click">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Uniform" Visual="{StaticResource appbar_delete}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
+            <StackPanel x:Name="pnlContent" VerticalAlignment="Top" HorizontalAlignment="Left" Orientation="Vertical" Margin="5">
+                <Label Content="Host Groups:" />
+                <ListView x:Name="lstHosts" Height="280" Width="230" />
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</Controls:MetroWindow>

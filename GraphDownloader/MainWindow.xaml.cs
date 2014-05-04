@@ -35,7 +35,7 @@ namespace GraphDownloader
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e) {
-            folderPath = Common.ChooseFolder();
+            folderPath = Common.ChooseFolderTd();
         }
 
         private void btnDownload_Click(object sender, RoutedEventArgs e) {
