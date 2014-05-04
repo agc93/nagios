@@ -17,7 +17,7 @@
 
         <StackPanel Orientation="Horizontal" Margin="5" x:Name="pnlButtonBar" Grid.Row="0">
             <StackPanel Orientation="Vertical">
-                <Button x:Name="btnAdd" HorizontalAlignment="Center" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}">
+                <Button x:Name="btnAdd" HorizontalAlignment="Center" VerticalAlignment="Top" Width="45" Height="45" Style="{DynamicResource MetroCircleButtonStyle}" Click="btnAdd_Click">
                     <Rectangle Width="20" Height="20">
                         <Rectangle.Fill>
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />

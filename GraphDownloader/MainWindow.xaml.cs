@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Deployment.Application;
 using System.Windows;
 using GraphDownloader.Shared;
 using GraphDownloader.UI;
@@ -20,22 +18,21 @@ namespace GraphDownloader
 
         public string folderPath {
             get { return _folderPath; }
-            set { _folderPath = value;
-            lblFolder.Content = _folderPath;
+            set {
+                _folderPath = value;
+                lblFolder.Content = _folderPath;
             }
         }
-        
 
         public MainWindow() {
             host = new Hosts();
             if (host.CheckDataFile()) {
                 InitializeComponent();
                 Properties.Settings.Default.FolderPath = null;
-                PopulateHostGroups(host.hostsSet);
+                refreshCombo();
             } else {
                 Application.Current.Shutdown();
             }
-
         }
 
         private void PopulateHostGroups(System.Data.DataSet dataSet) {
@@ -61,12 +58,10 @@ namespace GraphDownloader
         private void btnDownload_Click(object sender, RoutedEventArgs e) {
             if (Properties.Settings.Default.FolderPath != null) {
                 if ((checkFields(pkrStartDate.SelectedDate)) && (checkFields(pkrEndDate.SelectedDate)) && (pkrStartDate.SelectedDate < pkrEndDate.SelectedDate)) {
-                    if (cmbHostGrp.SelectedIndex != 2) {
-                        startDownload((DateTime)pkrStartDate.SelectedDate, (DateTime)pkrEndDate.SelectedDate, Properties.Settings.Default.FolderPath.ToString());
-                    } else {
-                        //pick another host group
-                        Common.taskDialogAdv(Properties.Resources.settingsError, Properties.Resources.settingsErrorText, Properties.Resources.settingsErrorHosts, Properties.Resources.settingsErrorTitle);
-                    }
+                    startDownload((DateTime)pkrStartDate.SelectedDate, (DateTime)pkrEndDate.SelectedDate, Properties.Settings.Default.FolderPath.ToString());
+
+                    //pick another host group
+                    //Common.taskDialogAdv(Properties.Resources.settingsError, Properties.Resources.settingsErrorText, Properties.Resources.settingsErrorHosts, Properties.Resources.settingsErrorTitle);
                 } else {
                     //wrong dates
                     Common.taskDialogAdv(Properties.Resources.settingsError, Properties.Resources.settingsErrorText, Properties.Resources.settingsErrorDate, Properties.Resources.settingsErrorTitle);
@@ -78,39 +73,17 @@ namespace GraphDownloader
         }
 
         private void startDownload(DateTime start, DateTime stop, string folder) {
-            string[] array = null;
             Hosts host = new Hosts();
             double startStamp = Common.toTimestamp(start);
             double endStamp = Common.toTimestamp(stop);
             string ip = Properties.Settings.Default.IPAddress;
             string uri = (String.Format("http://{0}/cgi-bin/nagios3/trends.cgi?createimage&t1={1}&t2={2}&assumeinitialstates=yes&assumestatesduringnotrunning=yes&initialassumedhoststate=0&initialassumedservicestate=0&assumestateretention=yes&includesoftstates=no&host={3}&backtrack=4&zoom=4", ip, startStamp, endStamp, "{0}"));
             // well this won't work anymore
-            switch (cmbHostGrp.SelectedIndex) {
-                case 0:
-                    CustomHostGrp custom = new CustomHostGrp();
-                    custom.ShowDialog();
-                    host.AddTable(custom.hostTable);
-                    array = null;
-                    break;
-                case 1:
-                    //BAC
-                    array = Common.bneAirport;
-                    break;
-                case 3:
-                    custom = new CustomHostGrp();
-                    custom.ShowDialog();
-                    host.AddTable(custom.hostTable);
-                    array = null;
-                    break;
-                case 2:
-                //thats a separator, you twit.
-                default:
-                    //pick something, you twit.
-                    MessageBox.Show("Choose a host group before continuing.");
-                    break;
-            }
-            if (array != null) {
-                Progress operation = new Progress(array, uri, Properties.Settings.Default.FolderPath);
+            if (cmbHostGrp.SelectedItem.ToString() != null && cmbHostGrp.SelectedItem.ToString() != "") {
+                Progress operation = new Progress();
+                operation.dlUri = uri;
+                operation.folderPath = folder;
+                operation.hostsTable = host.GetTableFromName(cmbHostGrp.SelectedItem.ToString());
                 operation.Show();
             }
         }
@@ -131,11 +104,17 @@ namespace GraphDownloader
         private void refreshCombo() {
             cmbHostGrp.ItemsSource = null;
             cmbHostGrp.Items.Clear();
-            cmbHostGrp.ItemsSource = host.GetTableNames();
+            cmbHostGrp.ItemsSource = host.ListTableNames();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e) {
             refreshCombo();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e) {
+            CustomHostGrp custom = new CustomHostGrp();
+            custom.ShowDialog();
+            host.AddTable(custom.hostTable);
         }
     }
 }

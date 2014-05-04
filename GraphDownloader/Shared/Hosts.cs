@@ -12,7 +12,7 @@ namespace GraphDownloader.Shared
         private IsolatedStorageFile storageFile;
         private DataSet _hostsSet;
 
-        public DataSet hostsSet {
+        private DataSet hostsSet {
             get { return _hostsSet; }
             set {
                 _hostsSet = value;
@@ -91,12 +91,18 @@ namespace GraphDownloader.Shared
             SaveHosts(hostsSet);
         }
 
-        internal List<string> GetTableNames() {
+        internal List<string> ListTableNames() {
             List<string> names = new List<string>();
             foreach (DataTable table in hostsSet.Tables) {
                 names.Add(table.TableName);
             }
             return names;
+        }
+
+        internal DataTable GetTableFromName(string p) {
+            DataTable dTable = hostsSet.Tables[p];
+            //need error handling here.
+            return dTable;
         }
     }
 }

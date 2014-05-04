@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using win = Microsoft.WindowsAPICodePack.Dialogs;
 using winForms = System.Windows.Forms;
 
