@@ -41,40 +41,6 @@ namespace GraphDownloader.UI
             btnOK.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        private void startDownload() {
-            try {
-                int current = 0;
-                foreach (DataRow row in hostsTable.Rows) {
-                    string host = row.ItemArray[0].ToString();
-                    string destFile = String.Format("{0}/{1}-graph.png", folderPath, host);
-                    Uri fullUri = new Uri(dlUri + host);
-                    current++;
-                    try {
-                        WebClient wc = new WebClient();
-                        string credentials = Convert.ToBase64String(Encoding.ASCII.GetBytes(Properties.Settings.Default.UserName + ":" + Properties.Settings.Default.Password));
-                        wc.Headers[HttpRequestHeader.Authorization] = "Basic " + credentials;
-                        wc.DownloadFile(fullUri, destFile);
-                        string message = host + "Completed";
-                        addMessage(message);
-                    }
-                    catch (WebException ex) {
-                        Common.taskDialogAdv(Properties.Resources.appError, Properties.Resources.dlError, (ex.InnerException + Environment.NewLine + ex.Message), Properties.Resources.settingsErrorTitle);
-                        btnOK.Content = "Close";
-                        break;
-                    }
-                    catch (Exception ex) {
-                        Common.taskDialogAdv(Properties.Resources.appError, Properties.Resources.unknownError, (ex.InnerException.ToString() + Environment.NewLine + ex.Message.ToString() + Environment.NewLine + ex.StackTrace.ToString()), Properties.Resources.settingsErrorTitle);
-                        btnOK.Content = "Close";
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex) {
-                Common.taskDialogAdv(Properties.Resources.appError, Properties.Resources.unknownError, (ex.InnerException.ToString() + Environment.NewLine + ex.Message.ToString() + Environment.NewLine + ex.StackTrace.ToString()), Properties.Resources.settingsErrorTitle);
-                this.Close();
-            }
-        }
-
         private void btnOK_Click(object sender, RoutedEventArgs e) {
             mw.Activate();
             this.Close();

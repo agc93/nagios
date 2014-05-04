@@ -39,7 +39,7 @@ namespace GraphDownloader.UI
                     this.hostTable = dTable;
                     this.Close();
                 } else {
-                    MessageBox.Show(Properties.Resources.hostFileError);
+                    Common.taskDialogSimple(Properties.Resources.hostFileError, Properties.Resources.settingsErrorTitle, string.Empty)
                 }
             } else {
                 //error message

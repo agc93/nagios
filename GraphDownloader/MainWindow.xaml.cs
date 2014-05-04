@@ -12,7 +12,6 @@ namespace GraphDownloader
     /// </summary>
     public partial class MainWindow
     {
-        public static string[] hostArray = null;
         private string _folderPath;
         private Hosts host;
 
@@ -31,22 +30,6 @@ namespace GraphDownloader
                 Properties.Settings.Default.FolderPath = null;
                 refreshCombo();
             } else {
-                Application.Current.Shutdown();
-            }
-        }
-
-        private void PopulateHostGroups(System.Data.DataSet dataSet) {
-            foreach (DataTable table in dataSet.Tables) {
-                cmbHostGrp.Items.Add(table.TableName);
-            }
-        }
-
-        private void startUp() {
-            RegistryKey installed_versions = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\NET Framework Setup\NDP");
-            string[] version_names = installed_versions.GetSubKeyNames();
-            double Framework = Convert.ToDouble(version_names[version_names.Length - 1].Remove(0, 1));
-            if (Framework < 4) {
-                MessageBox.Show(Properties.Resources.fwError);
                 Application.Current.Shutdown();
             }
         }
@@ -108,6 +91,7 @@ namespace GraphDownloader
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e) {
+            folderPath = string.Empty;
             refreshCombo();
         }
 
@@ -115,6 +99,7 @@ namespace GraphDownloader
             CustomHostGrp custom = new CustomHostGrp();
             custom.ShowDialog();
             host.AddTable(custom.hostTable);
+            refreshCombo();
         }
     }
 }
