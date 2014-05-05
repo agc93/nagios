@@ -102,12 +102,12 @@ namespace GraphDownloader.UI
                         bw.ReportProgress(current, progReport);
                     }
                     catch (WebException ex) {
-                        Common.taskDialogAdv(Properties.Resources.appError, Properties.Resources.dlError, (ex.InnerException + Environment.NewLine + ex.Message), Properties.Resources.settingsErrorTitle);
+                        Common.MsgAdvanced(Properties.Resources.appError, Properties.Resources.dlError, (ex.InnerException + Environment.NewLine + ex.Message), Properties.Resources.settingsErrorTitle);
                         btnOK.Content = "Close";
                         break;
                     }
                     catch (Exception ex) {
-                        Common.taskDialogAdv(Properties.Resources.appError, Properties.Resources.unknownError, (ex.InnerException.ToString() + Environment.NewLine + ex.Message.ToString() + Environment.NewLine + ex.StackTrace.ToString()), Properties.Resources.settingsErrorTitle);
+                        Common.MsgAdvanced(Properties.Resources.appError, Properties.Resources.unknownError, (ex.InnerException.ToString() + Environment.NewLine + ex.Message.ToString() + Environment.NewLine + ex.StackTrace.ToString()), Properties.Resources.settingsErrorTitle);
                         btnOK.Content = "Close";
                         break;
                     }
@@ -115,7 +115,7 @@ namespace GraphDownloader.UI
                 return;
             }
             catch (Exception ex) {
-                Common.taskDialogAdv(Properties.Resources.appError, Properties.Resources.unknownError, (ex.InnerException.ToString() + Environment.NewLine + ex.Message.ToString() + Environment.NewLine + ex.StackTrace.ToString()), Properties.Resources.settingsErrorTitle);
+                Common.MsgAdvanced(Properties.Resources.appError, Properties.Resources.unknownError, (ex.InnerException.ToString() + Environment.NewLine + ex.Message.ToString() + Environment.NewLine + ex.StackTrace.ToString()), Properties.Resources.settingsErrorTitle);
                 this.Close();
             }
         }
