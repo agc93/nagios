@@ -76,6 +76,13 @@ namespace GraphDownloader.UI
             }
         }
 
+        private void txtGrpName_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
+            if (!string.IsNullOrEmpty(txtGrpName.Text)) {
+                //do some checking
+                launchChecker();
+            }
+        }
+
         private void launchChecker() {
             SetUpWorker(bw);
             btnCross.Visibility = System.Windows.Visibility.Hidden;
@@ -83,7 +90,7 @@ namespace GraphDownloader.UI
             prgRing.IsActive = true;
             bw.RunWorkerAsync(txtGrpName.Text.ToString());
         }
-
+        #region thread/bw work
         private void SetUpWorker(BackgroundWorker bw) {
             bw.WorkerReportsProgress = false;
 
@@ -95,8 +102,9 @@ namespace GraphDownloader.UI
             prgRing.IsActive = false;
             if ((bool)e.Result) {
                 //table already exists
-                await this.ShowMessageAsync(String.Empty, "A group with this name already exists");
+                //await this.ShowMessageAsync(String.Empty, "A group with this name already exists");
                 btnCross.Visibility = System.Windows.Visibility.Visible;
+                btnCross.ToolTip = "A group with this name already exists";
                 btnOK.IsEnabled = false;
             } else {
                 //table is new
@@ -122,5 +130,7 @@ namespace GraphDownloader.UI
                 return;
             }
         }
+
+        #endregion
     }
 }

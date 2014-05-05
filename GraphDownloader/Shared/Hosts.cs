@@ -91,8 +91,6 @@ namespace GraphDownloader.Shared
             }
         }
 
-        #endregion non-static methods
-
         internal void AddTable(DataTable dataTable) {
             if (dataTable != null) {
                 hostsSet.Tables.Add(dataTable);
@@ -126,5 +124,7 @@ namespace GraphDownloader.Shared
             hostsSet.Tables.Remove(dTable);
             SaveHosts(hostsSet);
         }
+
+        #endregion non-static methods
     }
 }
