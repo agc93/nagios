@@ -71,7 +71,6 @@ namespace GraphDownloader.Shared
                 Common.MsgSimple("The hosts data file is currently in use. Please wait a moment and try again");
                 return null;
             }
-            
         }
 
         private bool SaveHosts(DataSet ds) {
@@ -106,13 +105,23 @@ namespace GraphDownloader.Shared
             return names;
         }
 
+        internal DataTable ListTableDetails() {
+            DataTable names = new DataTable();
+            names.Columns.Add("Group Name");
+            names.Columns.Add("Hosts");
+            foreach (DataTable table in hostsSet.Tables) {
+                DataRow row = names.NewRow();
+                names.Rows.Add(table.TableName, table.Rows.Count);
+            }
+            return names;
+        }
+
         internal DataTable GetTableFromName(string p) {
             try {
                 DataTable dTable = hostsSet.Tables[p];
                 return dTable;
             }
             catch (Exception) {
-
                 throw new InvalidDataException("Table does not exist");
             }
             //need error handling here.

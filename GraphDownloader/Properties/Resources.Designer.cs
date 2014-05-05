@@ -106,7 +106,7 @@ namespace GraphDownloader.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Please check your hosts file and try again&quot;..
+        ///   Looks up a localized string similar to Please check your hosts file and try again..
         /// </summary>
         internal static string hostFileError {
             get {
