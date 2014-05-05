@@ -133,7 +133,7 @@
     <value>Could not locate .NET Framework 4. Please ensure you have version 4 or greater installed and try again.</value>
   </data>
   <data name="hostFileError" xml:space="preserve">
-    <value>"Please check your hosts file and try again".</value>
+    <value>Please check your hosts file and try again.</value>
   </data>
   <data name="settingsError" xml:space="preserve">
     <value>Unable to download graphs</value>

@@ -7,13 +7,13 @@
         <Button x:Name="btnBrowse" Content="Browse..." HorizontalAlignment="Left" Margin="207,10,0,0" VerticalAlignment="Top" Width="75" Click="btnBrowse_Click" />
         <Label Content="Choose Hosts File:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" />
         <Label x:Name="lblGrpName" Content="Name:" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Height="25" Width="50" />
-        <TextBox x:Name="txtGrpName" Controls:TextboxHelper.Watermark="Enter a host group name..." Controls:TextboxHelper.ClearTextButton="True" Controls:TextboxHelper.SelectAllOnFocus="True" Margin="70,39,0,0" Height="25" VerticalAlignment="Top" Width="180" HorizontalAlignment="Left" LostFocus="txtGrpName_LostFocus" />
+        <TextBox x:Name="txtGrpName" Controls:TextboxHelper.Watermark="Enter a host group name..." Controls:TextboxHelper.ClearTextButton="True" Controls:TextboxHelper.SelectAllOnFocus="True" Margin="70,39,0,0" Height="25" VerticalAlignment="Top" Width="180" HorizontalAlignment="Left" LostFocus="txtGrpName_LostFocus" TextChanged="txtGrpName_TextChanged" />
         <Rectangle Width="20" Height="20" x:Name="btnTick" Margin="260,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Hidden">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_check}"/>
             </Rectangle.Fill>
         </Rectangle>
-        <Rectangle Width="20" Height="20" x:Name="btnCross" Margin="260,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Hidden">
+        <Rectangle Width="20" Height="20" x:Name="btnCross" Margin="260,42,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Hidden" ToolTipService.InitialShowDelay="0">
             <Rectangle.Fill>
                 <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_stop}" />
             </Rectangle.Fill>

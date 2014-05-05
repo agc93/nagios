@@ -3,9 +3,10 @@ using System.Windows;
 using GraphDownloader.UI;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using win = Microsoft.WindowsAPICodePack.Dialogs;
+//using win = Microsoft.WindowsAPICodePack.Dialogs;
 using Microsoft.Win32;
 using winForms = System.Windows.Forms;
+using td = Ookii.Dialogs.Wpf;
 
 namespace GraphDownloader.Shared
 {
@@ -55,7 +56,7 @@ namespace GraphDownloader.Shared
             mw.ShowDialog();
             return;
         }
-
+        /*
         [Obsolete("Use Common.ChooseFolder() instead")]
         internal static string ChooseFolderTd() {
             if (win.CommonFileDialog.IsPlatformSupported == true) {
@@ -76,12 +77,19 @@ namespace GraphDownloader.Shared
                 }
                 return null;
             }
-        }
+        } */
 
         internal static string ChooseFolder() {
+            td.VistaFolderBrowserDialog dlg = new td.VistaFolderBrowserDialog();
+            dlg.Description = "Choose a destination folder...";
+            dlg.UseDescriptionForTitle = true;
+            if ((bool)dlg.ShowDialog()) {
+                Properties.Settings.Default.FolderPath = dlg.SelectedPath.ToString();
+            }
             return null;
         }
 
+        /*
         [Obsolete("use Common.ChooseFile() instead")]
         internal static string[] ChooseFileTd() {
             if (win.CommonFileDialog.IsPlatformSupported == true) {
@@ -102,7 +110,7 @@ namespace GraphDownloader.Shared
                 }
             }
             return null;
-        }
+        } */
 
         internal static string[] ChooseFile() {
             OpenFileDialog dlg = new OpenFileDialog();
