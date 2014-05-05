@@ -42,7 +42,9 @@ namespace GraphDownloader.UI
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e) {
-            mw.Activate();
+            if (mw != null) {
+                mw.Activate();
+            }
             this.Close();
         }
 

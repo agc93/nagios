@@ -16,12 +16,19 @@ namespace GraphDownloader.UI
     {
         public static string[] customHosts = null;
         private BackgroundWorker bw = new BackgroundWorker();
+        private Hosts host;
 
         public DataTable hostTable { get; set; }
 
         public CustomHostGrp() {
             InitializeComponent();
             btnOK.IsEnabled = false;
+        }
+
+        internal CustomHostGrp(Hosts host) {
+            InitializeComponent();
+            btnOK.IsEnabled = false;
+            this.host = host;
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e) {
@@ -79,12 +86,12 @@ namespace GraphDownloader.UI
 
         private void SetUpWorker(BackgroundWorker bw) {
             bw.WorkerReportsProgress = false;
-            
+
             bw.RunWorkerCompleted += bw_RunWorkerCompleted;
             bw.DoWork += bw_DoWork;
         }
 
-        async void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+        private async void bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             prgRing.IsActive = false;
             if ((bool)e.Result) {
                 //table already exists
@@ -100,13 +107,17 @@ namespace GraphDownloader.UI
 
         private void bw_DoWork(object sender, DoWorkEventArgs e) {
             string name = (string)e.Argument;
-            Hosts host = new Hosts();
             try {
-                host.GetTableFromName(name);
-                e.Result = true;
-                return;
+                DataTable table = host.GetTableFromName(name);
+                if (table != null) {
+                    e.Result = true;
+                    return;
+                } else {
+                    e.Result = false;
+                    return;
+                }
             }
-            catch (InvalidDataException ex) {
+            catch (InvalidDataException) {
                 e.Result = false;
                 return;
             }

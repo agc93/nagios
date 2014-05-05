@@ -5,7 +5,7 @@
         Title="Progress" Height="375" Width="400">
     <Grid>
         <DockPanel LastChildFill="True">
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="40" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" Height="50" HorizontalAlignment="Right">
                 <Controls:ProgressRing x:Name="prgRing" IsActive="False" Height="25" Width="25" />
                 <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Right" Margin="10" VerticalAlignment="Top" Width="75" Click="btnOK_Click" Height="30" />
             </StackPanel>

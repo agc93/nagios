@@ -35,7 +35,7 @@ namespace GraphDownloader
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e) {
-            folderPath = Common.ChooseFolderTd();
+            folderPath = Common.ChooseFolder();
         }
 
         private void btnDownload_Click(object sender, RoutedEventArgs e) {
@@ -96,7 +96,7 @@ namespace GraphDownloader
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e) {
-            CustomHostGrp custom = new CustomHostGrp();
+            CustomHostGrp custom = new CustomHostGrp(host);
             custom.ShowDialog();
             host.AddTable(custom.hostTable);
             refreshCombo();
